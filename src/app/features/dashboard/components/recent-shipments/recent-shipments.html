@@ -1,0 +1,69 @@
+<div
+  class="border bg-white border-gray-200 rounded-xl shadow py-6 h-full flex flex-col gap-4 overflow-hidden"
+>
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-6">
+    <h2 class="font-bold text-xl">Recent Shipments</h2>
+    <div class="flex gap-2">
+      <button
+        class="hover:cursor-pointer bg-gray-100 text-slate-600 rounded-xl px-3 py-1.5 text-sm font-semibold hover:bg-gray-200 transition-colors"
+      >
+        Filter
+      </button>
+      <button
+        class="hover:cursor-pointer bg-gray-100 text-slate-600 rounded-xl px-3 py-1.5 text-sm font-semibold hover:bg-gray-200 transition-colors"
+      >
+        Export
+      </button>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full border-collapse text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Tracking ID</th>
+          <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Customer</th>
+          <th class="hidden md:table-cell px-6 py-3 text-left font-semibold text-slate-500">
+            Route
+          </th>
+          <th class="hidden sm:table-cell px-6 py-3 text-left font-semibold text-slate-500">ETA</th>
+          <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Status</th>
+          <th class="px-4 sm:px-6 py-3 text-right font-semibold text-slate-500">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        @for (shipment of recentShipments; track $index) {
+          <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-4 sm:px-6 py-3 font-medium">
+              <a href="#" class="text-blue-500 hover:underline"> #{{ shipment.trackingId }} </a>
+            </td>
+            <td class="px-4 sm:px-6 py-3 text-slate-700 font-semibold">
+              <span class="truncate max-w-[100px] block sm:inline">{{ shipment.customer }}</span>
+            </td>
+            <td class="hidden md:table-cell px-6 py-3 text-slate-700">
+              {{ shipment.route }}
+            </td>
+            <td class="hidden sm:table-cell px-6 py-3 text-slate-700">
+              {{ shipment.ETA }}
+            </td>
+            <td class="px-4 sm:px-6 py-4">
+              @let config = statusConfig[shipment.status];
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full px-2 sm:px-4 py-1 sm:py-2 text-[10px] sm:text-xs font-medium"
+                [class]="config.classes"
+              >
+                <span class="h-1.5 w-1.5 rounded-full" [class]="config.dot"></span>
+                {{ config.label }}
+              </span>
+            </td>
+            <td class="px-4 sm:px-6 py-3 text-right">
+              <button class="cursor-pointer transition-all text-slate-600 hover:text-slate-900">
+                <lucide-angular class="size-5 sm:size-6" [img]="eye"></lucide-angular>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
