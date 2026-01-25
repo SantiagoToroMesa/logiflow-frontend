@@ -1,0 +1,22 @@
+<div class="border h-full w-full bg-white border-gray-200 rounded-xl shadow p-4">
+  <div class="flex justify-between">
+    <h3 class="text-gray-600 font-medium">{{ label }}</h3>
+    <div [ngClass]="'p-2 rounded-lg flex items-center justify-center ' + colorClasses">
+      <lucide-angular class="size-6" [img]="icon"></lucide-angular>
+    </div>
+  </div>
+  <div class="flex gap-2 items-end">
+    <span class="text-2xl font-semibold">{{ statCounter }}</span>
+    <div
+      class="rounded-md px-2 flex items-center gap-2"
+      [ngClass]="isPositive ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'"
+    >
+      @if (isPositive) {
+        <lucide-angular class="size-4 text-green-700" [img]="trendingUp"></lucide-angular>
+      } @else {
+        <lucide-angular class="size-4 text-red-700" [img]="trendingDown"></lucide-angular>
+      }
+      <span class="font-semibold"> {{ percentage }}%</span>
+    </div>
+  </div>
+</div>

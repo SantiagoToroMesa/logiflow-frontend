@@ -1,0 +1,32 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div
+    class="col-span-1 md:col-span-2 lg:col-span-4 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2"
+  >
+    <app-view-header
+      [title]="'Dashboard Overview'"
+      [subtitle]="'Real-time logistic metrics and fleet status.'"
+    ></app-view-header>
+
+    <div class="flex gap-1 items-center text-sm text-slate-500" aria-live="polite">
+      <lucide-angular class="size-4" [img]="calendar"></lucide-angular>
+      <span>Last updated: {{ updatedTime }}</span>
+    </div>
+  </div>
+
+  @for (highlight of highlights; track highlight.label) {
+    <app-dashboard-highlight
+      class="col-span-1"
+      [position]="highlight.position"
+      [label]="highlight.label"
+      [icon]="highlight.icon"
+      [statCounter]="highlight.statCounter"
+      [percentage]="highlight.percentage"
+      [isPositive]="highlight.isPositive"
+    ></app-dashboard-highlight>
+  }
+
+  <app-shipment-volume class="col-span-1 md:col-span-2 w-full"></app-shipment-volume>
+  <app-fleet-overview class="col-span-1 md:col-span-2 w-full"></app-fleet-overview>
+
+  <app-recent-shipments class="col-span-1 md:col-span-2 lg:col-span-4"></app-recent-shipments>
+</div>
