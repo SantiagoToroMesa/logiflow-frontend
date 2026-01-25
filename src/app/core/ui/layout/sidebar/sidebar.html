@@ -1,0 +1,19 @@
+<ul class="flex flex-col py-2 gap-2">
+  @for (sidebarItem of sidebarItems; track $index) {
+    <li class="px-2">
+      <app-sidebar-item
+        [label]="sidebarItem.label"
+        [icon]="sidebarItem.icon"
+        [route]="sidebarItem.route"
+      ></app-sidebar-item>
+    </li>
+  }
+</ul>
+<hr class="text-slate-200" />
+<div class="py-2 px-2">
+  <app-sidebar-item
+    [label]="settings.label"
+    [icon]="settings.icon"
+    [route]="settings.route"
+  ></app-sidebar-item>
+</div>

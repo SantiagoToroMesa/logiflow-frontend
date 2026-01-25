@@ -1,0 +1,30 @@
+<div
+  class="flex gap-2 h-16 items-center justify-between px-4 lg:px-8 border-b border-slate-200 bg-white"
+>
+  <div
+    class="flex w-full max-w-45 sm:max-w-sm items-center gap-2 rounded-lg bg-slate-100 px-3 py-2 text-slate-500 transition-all focus-within:ring-2 focus-within:ring-blue-500/20"
+  >
+    <lucide-icon class="size-4 shrink-0 text-slate-400" [img]="search"></lucide-icon>
+    <input
+      type="text"
+      placeholder="Search shipments, IDs, or customers..."
+      class="w-full bg-transparent text-sm text-slate-700 placeholder-slate-400 focus:outline-none"
+    />
+  </div>
+
+  <div class="flex items-center gap-4 sm:gap-6">
+    <lucide-icon
+      class="size-6 hover:cursor-pointer text-slate-600 hover:text-slate-900 transition-colors"
+      [img]="bellDot"
+    ></lucide-icon>
+
+    <div class="hidden sm:block h-6 w-px bg-slate-200"></div>
+
+    <button
+      class="hover:cursor-pointer flex items-center justify-center rounded-lg bg-blue-600 p-2 sm:px-4 sm:py-2 gap-2 hover:bg-blue-500 transition-colors"
+    >
+      <lucide-icon [img]="plus" class="size-6 text-white"></lucide-icon>
+      <span class="hidden lg:inline font-semibold text-white text-sm">New Shipment</span>
+    </button>
+  </div>
+</div>
