@@ -1,0 +1,155 @@
+<div
+  class="border bg-white border-gray-200 rounded-xl shadow py-6 h-full flex flex-col gap-4 overflow-hidden"
+>
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-6">
+    <div class="relative w-80">
+      <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">
+        <lucide-icon [img]="search" class="size-4"></lucide-icon>
+      </span>
+      <input class="block w-80 p-2.5 ps-9 bg-neutral-secondary-medium border-slate-300 border border-default-medium text-heading text-sm rounded-md focus:ring-brand focus:border-brand shadow-xs placeholder:text-body" placeholder="Filter Customers..."/>
+    </div>
+
+    <div class="flex gap-10">
+      <div class="flex gap-4">
+        <select class="w-38 bg-neutral-secondary-medium border-slate-300 border border-default-medium p-2 rounded-md text-heading text-sm text-slate-700 dark:text-slate-500 focus:outline-none focus:ring-primary focus:border-primary">
+          <option>All Status</option>
+          <option>Active</option>
+          <option>Inactive</option>
+          <option>Pending</option>
+        </select>
+        <select class="w-38 bg-neutral-secondary-medium border-slate-300 border border-default-medium p-2 rounded-md text-heading text-sm text-slate-700 dark:text-slate-500 focus:outline-none focus:ring-primary focus:border-primary">
+          <option>Region</option>
+        </select>
+      </div>
+<!--      <div class="relative">-->
+<!--        <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">-->
+<!--          <lucide-icon [img]="download" class="size-4"></lucide-icon>-->
+<!--        </span>-->
+<!--        <button class="btn-primary w-24 bg-neutral-secondary-medium border-slate-300 border border-default-medium p-2 px-4 pl-9 text-slate-500 text-heading text-sm rounded-md hover:cursos-pointer">Export</button>-->
+<!--      </div>-->
+      <button  class="hover:cursor-pointer flex items-center btn-primary w-24 bg-neutral-secondary-medium border-slate-300 border border-default-medium p-2 px-4 gap-1 text-slate-500 text-heading text-sm rounded-md">
+        <lucide-icon [img]="download" class="size-4"></lucide-icon>
+        <span>Export</span>
+      </button>
+    </div>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full border-collapse text-sm">
+      <thead class="bg-gray-100">
+      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500"><input type="checkbox" class="size-4"></th>
+      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Client Name</th>
+      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">ID</th>
+      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Primary Contact</th>
+      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Active Shipments</th>
+      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Status</th>
+      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500"></th>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        @for (customer of pagedCustomers; track customer.id) {
+          <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-6 py-3"><input type="checkbox" class="size-4"></td>
+            <td class="px-6 py-3 font-semibold text-slate-700 flex items-center">
+              <div class="flex items-center gap-2">
+                @let configN = TypeConfig[customer.type] ;
+                <div class="w-14 h-14 rounded-full flex items-center justify-center font-semibold text-lg" [class]="configN.classes"]>
+                  <span>{{getInitials(customer.name)}}</span>
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-semibold text-slate-800">{{customer.name}}</span>
+                  <span class="text-xs text-slate-500" [class]="">{{configN.label}}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-3">
+              <a class="text-slate-500 hover:underline">#{{ customer.id }}</a>
+            </td>
+            <td class="px-6 py-3 hidden md:table-cell">
+              {{ customer.contact }}
+            </td>
+            <td class="px-6 py-3 hidden sm:table-cell">
+              {{ customer.activeShipments }}
+            </td>
+            <td class="px-6 py-3 hidden sm:table-cell">
+              @let config = ActiveConfig[customer.active];
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full px-2 sm:px-4 py-1 sm:py-2 text-[10px] sm:text-xs font-medium"
+                [class]="config.classes"
+              >
+                <span class="h-1.5 w-1.5 rounded-full" [class]="config.dot"></span>
+                {{ config.label }}
+              </span>
+            </td>
+            <td>
+              <button class="hover:cursor-pointer text-slate-500">
+                <lucide-icon [img]="ellipsisVertical"></lucide-icon>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div class="flex items-center justify-between px-6 py-4 text-sm text-slate-600">
+  <span>
+    Showing
+    {{ (currentPage - 1) * pageSize + 1 }}
+    to
+    {{ Math.min(currentPage * pageSize, customers.length) }}
+    of
+    {{ customers.length }} results
+  </span>
+
+      <div class="flex items-center gap-1">
+        <button
+          (click)="prevPage()"
+          class="px-2 py-1 rounded border"
+          [disabled]="currentPage === 1"
+        >
+          ‹
+        </button>
+
+        @for (page of pages; track page) {
+          <button
+            (click)="goToPage(page)"
+            class="px-3 py-1 rounded border"
+            [class.bg-blue-100]="currentPage === page"
+            [class.text-blue-500]="currentPage === page"
+          >
+            {{ page }}
+          </button>
+        }
+
+
+        <button
+          (click)="nextPage()"
+          class="px-2 py-1 rounded border"
+          [disabled]="currentPage === totalPages"
+        >
+          ›
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+<!--  <div class="overflow-x-auto">-->
+<!--    <table class="min-w-full border-collapse text-sm">-->
+<!--      <thead class="bg-gray-100">-->
+<!--      <tr>-->
+<!--        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Tracking ID</th>-->
+<!--        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Customer</th>-->
+<!--        <th class="hidden md:table-cell px-6 py-3 text-left font-semibold text-slate-500">-->
+<!--          Route-->
+<!--        </th>-->
+<!--        <th class="hidden sm:table-cell px-6 py-3 text-left font-semibold text-slate-500">ETA</th>-->
+<!--        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Status</th>-->
+<!--        <th class="px-4 sm:px-6 py-3 text-right font-semibold text-slate-500">Actions</th>-->
+<!--      </tr>-->
+<!--      @for(customer of customers; track $index){-->
+<!--        <app-customer-item [customer]="customer"></app-customer-item>-->
+<!--      }-->
+<!--      </thead>-->
+
+<!--    </table>-->
+<!--  </div>-->
+</div>

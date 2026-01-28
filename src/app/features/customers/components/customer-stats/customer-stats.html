@@ -1,0 +1,14 @@
+<div class="border h-full w-full bg-white border-gray-200 rounded-xl shadow p-5">
+<div class="flex justify-between">
+  <span class="text-slate-500 dark-text-slate mb-1.5">{{label}}</span>
+  <div
+    class="rounded-lg px-2 flex items-center gap-2"
+    [ngClass]="isPositive ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-100'"
+  >
+    <span class="font-semibold">{{ percentage }}%</span>
+  </div>
+</div>
+  <div class="flex gap-2 items-end">
+    <span class="text-4xl font-semibold">{{statCounter}}</span>
+  </div>
+</div>

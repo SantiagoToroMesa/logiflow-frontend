@@ -1,0 +1,19 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div class="col-span-1 md:col-span-2 lg:col-span-3 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 mb-3">
+    <app-view-header
+      [title]="'All Customers'"
+      [subtitle]="'Manage your client base and view shipment relationships'">
+    </app-view-header>
+    <button
+      class="hover:cursor-pointer flex items-center justify-center rounded-lg bg-blue-600 p-2 sm:px-4 sm:py-2 gap-2 hover:bg-blue-500 transition-colors"
+    >
+      <lucide-icon [img]="plus" class="size-6 text-white"></lucide-icon>
+      <span class="hidden lg:inline font-semibold text-white text-sm">Add New Customer</span>
+    </button>
+  </div>
+  @for(stats of CustomersStats; track stats.label){
+    <app-customer-stats class="col-span-1" [label]="stats.label" [percentage]="stats.percentage" [isPositive]="stats.isPositive" [statCounter]="stats.statCounter"></app-customer-stats>
+  }
+  <app-customer-list class="col-span-1 md:col-span-2 lg:col-span-3"></app-customer-list>
+</div>
+
