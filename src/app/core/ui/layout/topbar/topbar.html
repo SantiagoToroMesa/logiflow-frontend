@@ -20,11 +20,6 @@
 
     <div class="hidden sm:block h-6 w-px bg-slate-200"></div>
 
-    <button
-      class="hover:cursor-pointer flex items-center justify-center rounded-lg bg-blue-600 p-2 sm:px-4 sm:py-2 gap-2 hover:bg-blue-500 transition-colors"
-    >
-      <lucide-icon [img]="plus" class="size-6 text-white"></lucide-icon>
-      <span class="hidden lg:inline font-semibold text-white text-sm">New Shipment</span>
-    </button>
+    <app-button label="Create Shipment" [icon]="Plus" variant="primary"></app-button>
   </div>
 </div>
