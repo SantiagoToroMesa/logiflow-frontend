@@ -1,0 +1,18 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <div
+    class="col-span-1 md:col-span-2 lg:col-span-4 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2"
+  >
+    <app-view-header
+      [title]="'Shipments'"
+      [subtitle]="'Manage and track your active logistics operations.'"
+    ></app-view-header>
+
+    <div class="flex gap-2 items-center text-sm text-slate-500" aria-live="polite">
+      <app-button variant="secondary" [icon]="Download" label="Export"></app-button>
+      <app-button variant="primary" [icon]="Plus"  label="Create Shipment"></app-button>
+    </div>
+  </div>
+  <app-shipments-table class="col-span-4"></app-shipments-table>
+</div>
+
+
