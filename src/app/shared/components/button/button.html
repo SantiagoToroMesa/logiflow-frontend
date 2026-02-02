@@ -1,0 +1,14 @@
+<button class="hover:cursor-pointer border flex items-center justify-center rounded-lg p-2 sm:px-4 sm:py-2 gap-2 transition-colors"~
+[ngClass]="variant == 'primary' ? 'bg-blue-500 border-blue-700 hover:bg-blue-600' : 'hover:bg-gray-100 bg-white border-gray-300'"
+>
+  @if (icon) {
+    <lucide-angular
+      [ngClass]="variant == 'primary' ? 'text-white' : 'text-gray-400'"
+      [img]="icon"></lucide-angular>
+  }
+  <span
+    class="font-semibold text-lg"
+  [ngClass]="variant == 'primary' ? 'text-white' : 'text-gray-700' "
+
+  >{{label}}</span>
+</button>
