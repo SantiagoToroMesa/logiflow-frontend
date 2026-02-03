@@ -20,6 +20,17 @@
 
     <div class="hidden sm:block h-6 w-px bg-slate-200"></div>
 
-    <app-button label="Create Shipment" [icon]="Plus" variant="primary"></app-button>
+    <div class="flex gap-4 items-center">
+      <div class="lg:flex flex-col hidden">
+        <span class="font-semibold">{{userName}}</span>
+        <span class="text-gray-500 font-medium">{{userRole}}</span>
+      </div>
+      @if (userImage) {
+        <img [ngSrc]="userImage" class="block w-10 h-10 rounded-full object-cover ring-1 ring-gray-200"  alt="User Avatar"/>
+      } @else {
+        <div class="flex w-10 h-10 rounded-full bg-gray-300 items-center justify-center text-xl font-medium text-gray-700"
+        >{{initial}}</div>
+      }
+    </div>
   </div>
 </div>
