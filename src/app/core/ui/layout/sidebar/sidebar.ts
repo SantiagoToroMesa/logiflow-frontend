@@ -8,6 +8,7 @@ import {
   Map,
   Settings,
   Users,
+  LogOut,
 } from 'lucide-angular';
 import { SidebarItem } from '../components/sidebar-item/sidebar-item';
 
@@ -26,6 +27,12 @@ export class Sidebar {
   settings: sidebarItem = {
     label: 'Settings',
     icon: Settings,
+    route: 'settings',
+  };
+
+  logOut: sidebarItem = {
+    label: 'Log out',
+    icon: LogOut,
     route: 'settings',
   };
 
