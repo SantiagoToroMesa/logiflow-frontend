@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {LucideAngularModule } from 'lucide-angular';
 import { Search, Download, EllipsisVertical} from 'lucide-angular';
+import { PaginationComponent } from '../../../../shared/components/pagination-component/pagination-component';
 
 enum customerStatus {
   ACTIVE,
@@ -26,7 +27,7 @@ interface Customer {
 
 @Component({
   selector: 'app-customer-list',
-  imports: [LucideAngularModule],
+  imports: [LucideAngularModule, PaginationComponent],
   templateUrl: './customer-list.html',
   styleUrl: './customer-list.css',
 })
@@ -185,14 +186,6 @@ export class CustomerList {
     this.updatePage();
   }
 
-  nextPage() {
-    this.goToPage(this.currentPage + 1);
-  }
-
-  prevPage() {
-    this.goToPage(this.currentPage - 1);
-  }
-
   ActiveConfig = {
     [customerStatus.ACTIVE]: {
       label: 'Active',
@@ -248,4 +241,5 @@ export class CustomerList {
   }
 
   protected readonly Math = Math;
+  protected readonly event = event;
 }

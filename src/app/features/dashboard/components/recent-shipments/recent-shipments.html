@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100">
-        @for (shipment of recentShipments; track $index) {
+        @for (shipment of pagedShiments; track $index) {
           <tr class="hover:bg-gray-50 transition-colors">
             <td class="px-4 sm:px-6 py-3 font-medium">
               <a href="#" class="text-blue-500 hover:underline"> #{{ shipment.id }} </a>
@@ -57,5 +57,13 @@
         }
       </tbody>
     </table>
+  </div>
+  <div>
+    <app-pagination-component
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      [totalItems]="recentShipments.length"
+      (pageChange)="goToPage($event)">
+    </app-pagination-component>
   </div>
 </div>

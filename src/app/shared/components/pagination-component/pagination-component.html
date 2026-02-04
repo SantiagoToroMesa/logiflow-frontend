@@ -1,0 +1,40 @@
+<div class="flex items-center justify-between px-6 py-4 text-sm text-slate-600">
+
+  <span>
+    Showing
+    {{ (currentPage - 1) * pageSize + 1 }}
+    to
+    {{ Math.min(currentPage * pageSize, totalItems) }}
+    of
+    {{ totalItems }} results
+  </span>
+
+  <div class="flex items-center gap-1">
+    <button
+      class="px-2 py-1 rounded border"
+      (click)="prev()"
+      [disabled]="currentPage === 1"
+    >
+      ‹
+    </button>
+
+    @for (page of pages; track page) {
+      <button
+        class="px-3 py-1 rounded border"
+        (click)="goToPage(page)"
+        [class.bg-blue-600]="page === currentPage"
+        [class.text-white]="page === currentPage"
+      >
+        {{ page }}
+      </button>
+    }
+
+    <button
+      class="px-2 py-1 rounded border"
+      (click)="next()"
+      [disabled]="currentPage === totalPages"
+    >
+      ›
+    </button>
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { Eye, LucideAngularModule } from 'lucide-angular';
 import { ShipmentStatus } from '../../../../core/models/shipment-status';
 import { NgClass } from '@angular/common';
 import { AuxButton } from '../../../../shared/components/aux-button/aux-button';
+import { PaginationComponent } from '../../../../shared/components/pagination-component/pagination-component';
 
 interface Shipment {
   id: string;
@@ -15,7 +16,7 @@ interface Shipment {
 
 @Component({
   selector: 'app-shipments-table',
-  imports: [LucideAngularModule, NgClass, AuxButton],
+  imports: [LucideAngularModule, NgClass, AuxButton, PaginationComponent],
   templateUrl: './shipments-table.html',
 })
 export class ShipmentsTable {
@@ -92,5 +93,72 @@ export class ShipmentsTable {
       destination: 'Tokyo, JP',
       ETA: 'Oct 28, 2023',
     },
+    {
+      id: 'SHP-9281',
+      status: ShipmentStatus.IN_TRANSIT,
+      client: 'Acme Group',
+      origin: 'Shanghai, CN',
+      destination: 'Los Angeles, USA',
+      ETA: 'Oct 24, 2023',
+    },
+    {
+      id: 'SHP-9282',
+      status: ShipmentStatus.INCIDENT,
+      client: 'Globex Inc.',
+      origin: 'Berlin, DE',
+      destination: 'Paris, FR',
+      ETA: 'Delayed',
+    },
+    {
+      id: 'SHP-9283',
+      status: ShipmentStatus.INCIDENT,
+      client: 'Stark Ind.',
+      origin: 'New York, USA',
+      destination: 'London, UK',
+      ETA: 'Oct 20, 2023',
+    },
+    {
+      id: 'SHP-9284',
+      status: ShipmentStatus.INCIDENT,
+      client: 'Wayne Ent.',
+      origin: 'Gotham, NJ',
+      destination: 'Metropolis, NY',
+      ETA: 'Oct 26, 2023',
+    },
+    {
+      id: 'SHP-9285',
+      status: ShipmentStatus.IN_TRANSIT,
+      client: 'Umbrella Corp',
+      origin: 'Raccoon City, USA',
+      destination: 'Tokyo, JP',
+      ETA: 'Oct 28, 2023',
+    }
   ];
+
+  pagedShipments: Shipment[] = [];
+  pages: number[] = [];
+  pageSize = 5;
+  currentPage = 1;
+  totalPages = 0;
+
+  ngOnInit() {
+    this.totalPages = Math.ceil(this.shipments.length / this.pageSize);
+    this.updatePage();
+  }
+
+  updatePage() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+
+    this.pagedShipments = this.shipments.slice(start, end);
+
+    this.totalPages = Math.ceil(this.shipments.length / this.pageSize);
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.updatePage();
+  }
 }

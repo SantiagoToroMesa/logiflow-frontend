@@ -88,68 +88,11 @@
         }
       </tbody>
     </table>
-    <div class="flex items-center justify-between px-6 py-4 text-sm text-slate-600">
-  <span>
-    Showing
-    {{ (currentPage - 1) * pageSize + 1 }}
-    to
-    {{ Math.min(currentPage * pageSize, customers.length) }}
-    of
-    {{ customers.length }} results
-  </span>
-
-      <div class="flex items-center gap-1">
-        <button
-          (click)="prevPage()"
-          class="px-2 py-1 rounded border"
-          [disabled]="currentPage === 1"
-        >
-          ‹
-        </button>
-
-        @for (page of pages; track page) {
-          <button
-            (click)="goToPage(page)"
-            class="px-3 py-1 rounded border"
-            [class.bg-blue-100]="currentPage === page"
-            [class.text-blue-500]="currentPage === page"
-          >
-            {{ page }}
-          </button>
-        }
-
-
-        <button
-          (click)="nextPage()"
-          class="px-2 py-1 rounded border"
-          [disabled]="currentPage === totalPages"
-        >
-          ›
-        </button>
-      </div>
-    </div>
-
+    <app-pagination-component
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      [totalItems]="customers.length"
+      (pageChange)="goToPage($event)">
+    </app-pagination-component>
   </div>
-
-
-<!--  <div class="overflow-x-auto">-->
-<!--    <table class="min-w-full border-collapse text-sm">-->
-<!--      <thead class="bg-gray-100">-->
-<!--      <tr>-->
-<!--        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Tracking ID</th>-->
-<!--        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Customer</th>-->
-<!--        <th class="hidden md:table-cell px-6 py-3 text-left font-semibold text-slate-500">-->
-<!--          Route-->
-<!--        </th>-->
-<!--        <th class="hidden sm:table-cell px-6 py-3 text-left font-semibold text-slate-500">ETA</th>-->
-<!--        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">Status</th>-->
-<!--        <th class="px-4 sm:px-6 py-3 text-right font-semibold text-slate-500">Actions</th>-->
-<!--      </tr>-->
-<!--      @for(customer of customers; track $index){-->
-<!--        <app-customer-item [customer]="customer"></app-customer-item>-->
-<!--      }-->
-<!--      </thead>-->
-
-<!--    </table>-->
-<!--  </div>-->
 </div>

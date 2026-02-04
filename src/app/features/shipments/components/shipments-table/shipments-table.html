@@ -1,66 +1,74 @@
-<div
-  class="overflow-x-auto border bg-white border-gray-200 rounded-xl shadow h-full flex flex-col gap-4 overflow-hidden">
-  <table class="min-w-full border-collapse text-sm">
-    <thead class="bg-gray-100">
-    <tr>
-      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">ID</th>
-      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">STATUS</th>
-      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">CLIENT</th>
-      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">ORIGIN</th>
-      <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">DESTINATION</th>
-      <th class="hidden sm:table-cell px-6 py-3 text-left font-semibold text-slate-500">ETA</th>
-      <th class="px-4 sm:px-6 py-3 text-right font-semibold text-slate-500">ACTIONS</th>
-    </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-100">
-      @for (shipment of shipments; track $index) {
-        <tr class="hover:bg-gray-50 transition-colors">
-          <td class="px-4 sm:px-6 py-3 font-medium">
-            <a href="#" class="text-blue-500 hover:underline"> #{{ shipment.id }} </a>
-          </td>
-          <td class="px-4 sm:px-6 py-4">
-            @let config = statusConfig[shipment.status];
-            <span
-              class="inline-flex items-center gap-1.5 rounded-full px-2 sm:px-4 py-1 sm:py-2 text-[10px] sm:text-xs font-medium"
-              [class]="config.classes"
-            >
-                <span class="h-1.5 w-1.5 rounded-full" [class]="config.dot"></span>
-              {{ config.label }}
-              </span>
-          </td>
-          <td class="px-4 sm:px-6 py-3 text-slate-700 font-semibold">
-            <span class="truncate max-w-[100px] block sm:inline">{{ shipment.client }}</span>
-          </td>
-          <td class="hidden md:table-cell px-6 py-3 text-slate-700">
-            {{ shipment.origin }}
-          </td>
-          <td class="hidden md:table-cell px-6 py-3 text-slate-700">
-            {{ shipment.destination }}
-          </td>
-          <td class="hidden sm:table-cell px-6 py-3" [ngClass]="shipment.ETA == 'Delayed' ? 'text-red-600' : 'text-slate-700'">
-            {{ shipment.ETA }}
-          </td>
-          <td class="px-4 sm:px-6 py-3 text-right">
-            <button class="cursor-pointer transition-all text-slate-600 hover:text-slate-900">
-              <lucide-angular class="size-5 sm:size-6" [img]="eye"></lucide-angular>
-            </button>
-          </td>
-        </tr>
-      }
-    <tr>
-      <td colspan="100%" class="px-4 sm:px-6 py-2">
-        <div class="flex justify-between items-center w-full">
-      <span class="text-sm text-slate-600">
-        Showing 1 to 5 of <span class="font-bold">{{ totalResults }}</span> results
-      </span>
-          <div class="flex gap-2">
-            <app-aux-button label="Previous"></app-aux-button>
-            <app-aux-button label="Next"></app-aux-button>
-          </div>
-        </div>
-      </td>
-    </tr>
+<div class="border bg-white border-gray-200 rounded-xl shadow h-full flex flex-col">
 
-    </tbody>
-  </table>
+  <!-- SOLO la tabla tiene overflow -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full border-collapse text-sm">
+      <thead class="bg-gray-100">
+      <tr>
+        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">ID</th>
+        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">STATUS</th>
+        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">CLIENT</th>
+        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">ORIGIN</th>
+        <th class="px-4 sm:px-6 py-3 text-left font-semibold text-slate-500">DESTINATION</th>
+        <th class="hidden sm:table-cell px-6 py-3 text-left font-semibold text-slate-500">ETA</th>
+        <th class="px-4 sm:px-6 py-3 text-right font-semibold text-slate-500">ACTIONS</th>
+      </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-100">
+        @for (shipment of pagedShipments; track shipment.id) {
+          <tr class="hover:bg-gray-50 transition-colors">
+            <td class="px-4 sm:px-6 py-3 font-medium">
+              <a href="#" class="text-blue-500 hover:underline"> #{{ shipment.id }} </a>
+            </td>
+
+            <td class="px-4 sm:px-6 py-4">
+              @let config = statusConfig[shipment.status];
+              <span
+                class="inline-flex items-center gap-1.5 rounded-full px-2 sm:px-4 py-1 sm:py-2 text-[10px] sm:text-xs font-medium"
+                [class]="config.classes">
+                <span class="h-1.5 w-1.5 rounded-full" [class]="config.dot"></span>
+                {{ config.label }}
+              </span>
+            </td>
+
+            <td class="px-4 sm:px-6 py-3 text-slate-700 font-semibold">
+              <span class="truncate max-w-[100px] block sm:inline">
+                {{ shipment.client }}
+              </span>
+            </td>
+
+            <td class="hidden md:table-cell px-6 py-3 text-slate-700">
+              {{ shipment.origin }}
+            </td>
+
+            <td class="hidden md:table-cell px-6 py-3 text-slate-700">
+              {{ shipment.destination }}
+            </td>
+
+            <td class="hidden sm:table-cell px-6 py-3"
+                [ngClass]="shipment.ETA == 'Delayed' ? 'text-red-600' : 'text-slate-700'">
+              {{ shipment.ETA }}
+            </td>
+
+            <td class="px-4 sm:px-6 py-3 text-right">
+              <button class="cursor-pointer transition-all text-slate-600 hover:text-slate-900">
+                <lucide-angular class="size-5 sm:size-6" [img]="eye"></lucide-angular>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="w-full px-6 py-4">
+    <app-pagination-component
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      [totalItems]="shipments.length"
+      (pageChange)="goToPage($event)">
+    </app-pagination-component>
+  </div>
+
 </div>
